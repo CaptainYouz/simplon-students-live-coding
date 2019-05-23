@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
-const Login = (props) => {
-  return (
-    <div>
-      <input placeholder="username" /> <br />
-      <input placeholder="password" /> <br />
-      <button>Connect</button>
-    </div>
-  );
+
+
+class Login extends Component {
+  state = { 
+    username : '',
+    password : ''
+   }
+
+  handleChange = (event) =>  {
+    this.setState({ [event.target.name] : event.target.value })
+  }
+
+  handleSubmit = (event) => {
+    axios.post('http://localhost:2345/auth/login', 
+    {
+      username: this.state.username,
+      password: this.state.password
+    }
+    ).then((res) => {
+            console.log(res)
+        }).catch((err)=> {
+            console.error(err); 
+        })
+  }
+
+  render () {
+    return (
+      <div>
+        <input placeholder="username" name="username" onChange={this.handleChange}/> <br />
+        <input placeholder="password" name="password" onChange={this.handleChange}/> <br />
+        <button onClick={this.handleSubmit}>Connect</button>
+      </div>
+    );
+  }
 };
 export default Login;
