@@ -21,6 +21,7 @@ class Login extends Component {
     }
     ).then((res) => {
             console.log(res)
+            localStorage.setItem('x-auth-token', res.data.token)
         }).catch((err)=> {
             console.error(err); 
         })
